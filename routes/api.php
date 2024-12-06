@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/products', [UserController::class, 'products']);
+Route::get('/products/search', [UserController::class, 'search']);
+Route::get('/products/{id}', [UserController::class, 'detailProduct']);
+Route::post('/payments/create', [PaymentController::class, 'createTransaction']);

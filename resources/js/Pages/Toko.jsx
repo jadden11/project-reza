@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
 import AdminLayout from "@/Layouts/AdminLayout";
+import axios from "axios";
 
 function formatRupiah(angka) {
     return new Intl.NumberFormat("id-ID", {
@@ -102,16 +103,65 @@ export default function Toko({ products, categories, filters }) {
                                         <div className="flex space-x-4 mb-6 pt-5 text-sm font-medium">
                                             <div className="flex-auto flex space-x-4">
                                                 <button
-                                                    className="h-10 px-6 font-semibold rounded-md bg-indigo-600 text-white hover:bg-slate-600"
-                                                    type="submit"
+                                                    onClick={() => {
+                                                        console.log(
+                                                            "Button clicked"
+                                                        ); // Tambahkan ini untuk debug
+                                                        axios
+                                                            .get("/checkout")
+                                                            .then(
+                                                                (response) => {
+                                                                    console.log(
+                                                                        response
+                                                                            .data
+                                                                            .message
+                                                                    );
+                                                                }
+                                                            )
+                                                            .catch((error) => {
+                                                                console.error(
+                                                                    error
+                                                                        .response
+                                                                        .data
+                                                                        .message
+                                                                );
+                                                            });
+                                                    }}
+                                                    className="bg-green-600 text-white px-4 py-2 rounded-md"
                                                 >
-                                                    Buy now
+                                                    Checkout
                                                 </button>
+
                                                 <button
-                                                    className="h-10 px-6 font-semibold rounded-md bg-yellow-200 text-black hover:bg-gray-200"
-                                                    type="submit"
+                                                    onClick={() =>
+                                                        axios
+                                                            .post("/cart/add", {
+                                                                product_id:
+                                                                    product.id,
+                                                            })
+                                                            .then(
+                                                                (response) => {
+                                                                    // Tampilkan pesan sukses atau lakukan sesuatu
+                                                                    console.log(
+                                                                        response
+                                                                            .data
+                                                                            .message
+                                                                    );
+                                                                }
+                                                            )
+                                                            .catch((error) => {
+                                                                // Tampilkan pesan kesalahan
+                                                                console.error(
+                                                                    error
+                                                                        .response
+                                                                        .data
+                                                                        .message
+                                                                );
+                                                            })
+                                                    }
+                                                    className="bg-indigo-600 text-white px-4 py-2 rounded-md"
                                                 >
-                                                    Add to bag
+                                                    Add to Cart
                                                 </button>
                                             </div>
                                             <button
