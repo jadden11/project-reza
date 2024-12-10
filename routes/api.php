@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -24,3 +25,6 @@ Route::get('/products', [UserController::class, 'products']);
 Route::get('/products/search', [UserController::class, 'search']);
 Route::get('/products/{id}', [UserController::class, 'detailProduct']);
 Route::post('/payments/create', [PaymentController::class, 'createTransaction']);
+
+
+Route::get('/categories/{id}/products', [CategoryController::class, 'getProductsByCategory']);

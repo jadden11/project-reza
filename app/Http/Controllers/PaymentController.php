@@ -5,9 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Midtrans\Snap;
 use Midtrans\Config;
+use App\Mail\InvoiceMail;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
+
+    public function sendInvoice(Request $request)
+    {
+        $details = [
+            'name' => $request->name,
+            'product_name' => $request->product_name,
+            'price' => $request->price,
+        ];
+
+        Mail::to($request->email)->send(new InvoiceMail($details));
+
+        return response()->json(['message' => 'Invoice sent successfully']);
+    }
+
+
     public function __construct()
     {
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');

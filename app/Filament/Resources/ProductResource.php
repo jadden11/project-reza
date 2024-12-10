@@ -56,7 +56,6 @@ class ProductResource extends Resource
                     ->searchable(),
                 TextColumn::make('slug'),
                 TextColumn::make('price')
-                    ->prefix('IDR')
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 TextColumn::make('category.name'),
                 ImageColumn::make('image'),
